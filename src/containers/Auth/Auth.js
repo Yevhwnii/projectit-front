@@ -11,14 +11,15 @@ import Phone from '../../components/UI/Auth/Phone/Phone'
 class Auth extends Component {
 
     state = {
-        controls: {
+        form: {
             email: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'email',
-                    placeholder: 'Username'
+                    placeholder: ''
                 },
                 label: 'Username: ',
+                icon: 'user',
                 value: '',
                 validation: {
                     required: true,
@@ -31,9 +32,10 @@ class Auth extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'password',
-                    placeholder: 'Password'
+                    placeholder: ''
                 },
                 label: 'Password: ',
+                icon: 'lock',
                 value: '',
                 validation: {
                     required: true,
@@ -45,22 +47,39 @@ class Auth extends Component {
         },
     }
 
+    inputChangedHandler = (event, inputId) => {
+        const updatedformElement = {
+            ...this.state.form[inputId],
+            value: event.target.value,
+            touched: true
+        }
+        const updatedForm = {
+            ...this.state.form,
+            [inputId]: updatedformElement
+        }
+        this.setState({form: updatedForm})
+    }
+
 
     render() {
         let formArrayElememts = []
-        for (let key in this.state.controls) {
+        for (let key in this.state.form) {
             formArrayElememts.push({
-                id: key,
-                config: this.state.controls[key]
+                id: key, // not a number but : email or password 
+                config: this.state.form[key]
             })
         }
         let formElements = formArrayElememts.map(formElement => {
             return <Input 
             key={formElement.id}
+            id ={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
             label={formElement.config.label}
+            icon={formElement.config.icon}
+            changed={this.inputChangedHandler}
+            touched={formElement.config.touched}
             />
         })
 

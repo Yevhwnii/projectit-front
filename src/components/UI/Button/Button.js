@@ -6,13 +6,13 @@ const Button = props => {
     let buttonClasses = [classes.Button]
     
 
-    switch (props.type) {
-        case 'auth':
-            buttonClasses.push(classes.AuthButton)
-            break;
-        default:
-            break;
-    }
+    // switch (props.type) {
+    //     case 'auth':
+    //         buttonClasses.push(classes.AuthButton)
+    //         break;
+    //     default:
+    //         break;
+    // }
 
     return (
         <div>

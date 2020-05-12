@@ -1,30 +1,85 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import classes from './Input.module.css'
 
-const Input = props => {
-    let inputElement = null
-    console.log(props.elementConfig);
-    
-    switch (props.elementType) {
-        case 'input':
-            inputElement = <input
-                className={classes.InputElement}
-                {...props.elementConfig}
-                value={props.value}
+class Input extends Component {
 
-            />
-            break;
-        default:
-            break;
+    state = {
+        focused: false
     }
 
-    return (
-        <div className={classes.Input}>
-            <label className={classes.Label}>{props.label}</label>
-            {inputElement}
-        </div>
-    )
+    onFocus = () => {
+        this.setState({focused: true})
+    }
+    onBlur = () => {
+        this.setState({focused: false})
+    }
+
+    render() {        
+        let inputElement = null
+        let inputIcon = null
+        let inputClasses = [classes.InputElement]
+        let iconClasses = [classes.Icon]
+        let labelClasses = [classes.Label]
+        let inputDivClasses = [classes.InputWithIcon]
+
+        if (this.props.icon) {
+            switch (this.props.icon) {
+                case 'user':
+                    inputIcon = faUser
+                    break;
+                case 'lock':
+                    inputIcon = faLock
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(this.state.focused) {
+            iconClasses.push(classes.IconFocused)
+            labelClasses.push(classes.LabelFocused)
+            inputDivClasses.push(classes.InputWithIconFocused)
+        }
+        
+        
+        switch (this.props.elementType) {
+            case 'input':
+                inputElement = <input
+                    className={inputClasses.join(' ')}
+                    {...this.props.elementConfig}
+                    value={this.props.value}
+                    onFocus={this.onFocus}
+                    onBlur={this.onBlur}
+                    onChange={(e) => this.props.changed(e, this.props.id)}
+                />
+                break;
+            default:
+                break;
+        }
+    
+        return (
+            <div>  
+                {this.props.icon ? 
+                    <div className={inputDivClasses.join(' ')}>
+                        <div className={classes.IconDiv}>
+                            <FontAwesomeIcon className={iconClasses.join(' ')} icon={inputIcon} /> 
+                        </div>
+                        <div className={classes.LabelDiv}>
+                            <label className={labelClasses.join(' ')}>{this.props.label}</label>
+                            {inputElement}
+                        </div>
+                    </div> 
+                : 
+                <div>
+                    <label className={classes.Label}>{this.props.label}</label>
+                    {inputElement}
+                </div>}
+            </div>
+        )
+    }
 };
 
 export default Input;

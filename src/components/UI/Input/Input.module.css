@@ -1,11 +1,65 @@
-.InputElement {
 
+.InputWithIcon {
+    position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin: 13px 0 ;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+    transition: 0.5s ease-out;
+}
+
+.InputWithIconFocused {
+    border-bottom: 2px solid #38d39f;
+}
+
+.IconDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 45px;
+}
+
+.Icon {
+    color: #d9d9d9;
+}
+
+.IconFocused {
+    color: #38d39f;
+}
+
+.LabelDiv {
+    position: relative;
+    height: 45px;
 }
 
 .Label {
-
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 18px;
+    transition: 0.3s;
+}
+.LabelFocused {
+    top: -5px;
+    font-size: 15px;
 }
 
-.Input {
-    
+.InputElement {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0.5rem 0.7rem;
+    font-size: 1.2rem;
+    color: #555;
+    font-family: 'Poppins', sans-serif;
+
 }
