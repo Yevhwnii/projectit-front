@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 
 import classes from './Auth.module.css'
 
@@ -7,6 +8,7 @@ import Input from '../../components/UI/Input/Input'
 import Background from '../../components/UI/Auth/Background/Background'
 import Avatar from '../../components/UI/Auth/Avatar/Avatar'
 import Phone from '../../components/UI/Auth/Phone/Phone'
+import * as actions from '../../store/actions/index'
 
 class Auth extends Component {
 
@@ -45,6 +47,7 @@ class Auth extends Component {
                 touched: false
             },
         },
+        
     }
 
     inputChangedHandler = (event, inputId) => {
@@ -60,6 +63,10 @@ class Auth extends Component {
         this.setState({form: updatedForm})
     }
 
+    authHandler = (event) => {
+        event.preventDefault()
+        this.props.onAuth(this.state.form.email.value, this.state.form.password.value)
+    }
 
     render() {
         let formArrayElememts = []
@@ -92,7 +99,7 @@ class Auth extends Component {
                 <div className={classes.Container}>
                     <Phone/>
                     <div className={classes.LoginFormContainer}>
-                        <form className={classes.LoginForm}>
+                        <form className={classes.LoginForm} onSubmit={this.authHandler}>
                         <Avatar/>
                         <h2>Welcome!</h2>
                         {formElements}
@@ -105,4 +112,10 @@ class Auth extends Component {
     }
 };
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Auth);
