@@ -8,6 +8,7 @@ import Input from '../../components/UI/Input/Input'
 import Background from '../../components/UI/Auth/Background/Background'
 import Avatar from '../../components/UI/Auth/Avatar/Avatar'
 import Phone from '../../components/UI/Auth/Phone/Phone'
+import Spinner from '../../components/UI/Spinner/Spinner'
 import * as actions from '../../store/actions/index'
 
 class Auth extends Component {
@@ -90,9 +91,6 @@ class Auth extends Component {
             />
         })
 
-
-
-
         return (
             <div>
                 <Background />
@@ -102,8 +100,13 @@ class Auth extends Component {
                         <form className={classes.LoginForm} onSubmit={this.authHandler}>
                         <Avatar/>
                         <h2>Welcome!</h2>
-                        {formElements}
-                        <Button type="auth">Login</Button>
+                            {this.props.loading ? <Spinner loading={this.props.loading} />
+                             :
+                            (<div>
+                                {formElements}
+                                <Button type="auth">Login</Button>
+                            </div>)
+                            }
                         </form>
                     </div>
                 </div>
@@ -112,10 +115,16 @@ class Auth extends Component {
     }
 };
 
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password) => dispatch(actions.auth(email, password))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

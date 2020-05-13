@@ -1,4 +1,6 @@
 export {
     auth,
-    authStart
+    authStart,
+    authSuccess,
+    checkAuthState
 } from './auth'
