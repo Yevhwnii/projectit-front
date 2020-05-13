@@ -7,14 +7,17 @@ import classes from './Input.module.css'
 class Input extends Component {
 
     state = {
-        focused: false
+        focused: false,
+        
     }
 
     onFocus = () => {
         this.setState({focused: true})
     }
     onBlur = () => {
-        this.setState({focused: false})
+        if (!this.props.value) {
+            this.setState({focused: false}) 
+        } 
     }
 
     render() {        
