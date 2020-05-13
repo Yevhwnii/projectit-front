@@ -4,7 +4,7 @@ import axios from 'axios'
 import * as actions from '../actions'
 
 
-/// Auth - process saga
+// Auth - process saga
 export function* authSaga(action) {
     yield put(actions.authStart())
     const authData = {
@@ -24,12 +24,16 @@ export function* authSaga(action) {
         
     // }
 }
-/// Auth - check auth process saga
+// Auth - check auth process saga
 export function* authCheckState(action) {
     const token = yield localStorage.getItem('token')
     // If !token - logout
     // TODO: expiration data check, if expired then logout, if not, new expiration date is assigned
     
     yield put(actions.authSuccess(token))
-    
+}
+// Auth - logout process saga
+export function* authLogout(action) {
+    yield localStorage.removeItem('token')
+    yield put(actions.authLogoutSucced())
 }

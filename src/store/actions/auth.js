@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes'
 
-//// Auth process
+// Auth process
 export const auth = (email, password) => {
     return {
         type: actionTypes.AUTH_USER_BEGIN,
@@ -22,9 +22,23 @@ export const authSuccess = (token) => {
 }
 ////
 
-/// Auth check state
+// Auth check state
 export const checkAuthState = () => {
     return {
         type: actionTypes.AUTH_CHECK_STATE
     }
 }
+////
+
+// Auth logout
+export const authLogout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT_START
+    }
+}
+export const authLogoutSucced = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT_SUCCED
+    }
+}
+////
