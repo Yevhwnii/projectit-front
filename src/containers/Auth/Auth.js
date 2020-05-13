@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
+import {Helmet} from 'react-helmet'
 
 import classes from './Auth.module.css'
 
@@ -93,6 +94,9 @@ class Auth extends Component {
 
         return (
             <div>
+            <Helmet>
+                <title>Authentication page</title>
+            </Helmet>
                 <Background />
                 <div className={classes.Container}>
                     <Phone/>
