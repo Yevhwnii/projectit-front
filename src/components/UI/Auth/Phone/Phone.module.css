@@ -7,3 +7,15 @@
     justify-content: flex-end;
     align-items: center;
 }
+
+@media screen and (max-width: 1000px) {
+    .Phone {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .Container {
+        display: none;
+    }
+}

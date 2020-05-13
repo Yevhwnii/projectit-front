@@ -8,7 +8,6 @@ class Input extends Component {
 
     state = {
         focused: false,
-        
     }
 
     onFocus = () => {
