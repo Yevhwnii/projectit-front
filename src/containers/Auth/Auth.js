@@ -11,15 +11,16 @@ import Avatar from '../../components/UI/Auth/Avatar/Avatar'
 import Phone from '../../components/UI/Auth/Phone/Phone'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import * as actions from '../../store/actions/index'
+import {checkValidity} from '../../shared/utility'
 
 class Auth extends Component {
 
     state = {
         form: {
-            email: {
+            id: {
                 elementType: 'input',
                 elementConfig: {
-                    type: 'email',
+                    type: 'text',
                     placeholder: ''
                 },
                 label: 'Username: ',
@@ -27,7 +28,9 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    isEmail: true
+                    isId: true,
+                    minLength: 8,
+                    maxLength: 8
                 },
                 valid: false,
                 touched: false
@@ -43,7 +46,7 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 6
+                    isPassword: true
                 },
                 valid: false,
                 touched: false
@@ -53,9 +56,12 @@ class Auth extends Component {
     }
 
     inputChangedHandler = (event, inputId) => {
+        const isValid = checkValidity(event.target.value, this.state.form[inputId].validation)        
+
         const updatedformElement = {
             ...this.state.form[inputId],
             value: event.target.value,
+            valid: isValid,
             touched: true
         }
         const updatedForm = {
@@ -88,6 +94,7 @@ class Auth extends Component {
             label={formElement.config.label}
             icon={formElement.config.icon}
             changed={this.inputChangedHandler}
+            invalid={!formElement.config.valid}
             touched={formElement.config.touched}
             />
         })
