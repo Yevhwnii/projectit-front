@@ -8,15 +8,25 @@ export const checkValidity = (value, rules ) => {
         isValid = testString.test(value) && isValid
     }
     if(rules.isPassword) {
-        const testString = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const testString = /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/
         isValid = testString.test(value) && isValid
     }
+    
+    
+    
     if (rules.minLength) {
         isValid = value.length >= rules.minLength && isValid
     }
     if (rules.maxLength) {
         isValid = value.length <= rules.maxLength && isValid
     }
-
     return isValid
+}
+
+export const checkFormValidity = (form) => {
+    let formIsValid = true
+    for (let key in form) {
+        formIsValid = form[key].valid && formIsValid
+    }
+    return formIsValid
 }

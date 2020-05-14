@@ -11,7 +11,7 @@ import Avatar from '../../components/UI/Auth/Avatar/Avatar'
 import Phone from '../../components/UI/Auth/Phone/Phone'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import * as actions from '../../store/actions/index'
-import {checkValidity} from '../../shared/utility'
+import {checkValidity, checkFormValidity} from '../../shared/utility'
 
 class Auth extends Component {
 
@@ -52,11 +52,12 @@ class Auth extends Component {
                 touched: false
             },
         },
+        formIsValid: false
         
     }
 
     inputChangedHandler = (event, inputId) => {
-        const isValid = checkValidity(event.target.value, this.state.form[inputId].validation)        
+        const isValid = checkValidity(event.target.value, this.state.form[inputId].validation)    
 
         const updatedformElement = {
             ...this.state.form[inputId],
@@ -68,12 +69,14 @@ class Auth extends Component {
             ...this.state.form,
             [inputId]: updatedformElement
         }
-        this.setState({form: updatedForm})
+        this.setState({form: updatedForm}, () => {
+            this.setState({formIsValid: checkFormValidity(this.state.form)})
+        })  
     }
 
     authHandler = (event) => {
         event.preventDefault()
-        this.props.onAuth(this.state.form.email.value, this.state.form.password.value)
+        this.props.onAuth(this.state.form.id.value, this.state.form.password.value)
     }
 
     render() {
@@ -115,7 +118,7 @@ class Auth extends Component {
                              :
                             (<div>
                                 {formElements}
-                                <Button type="auth">Login</Button>
+                                <Button type="auth" disabled={!this.state.formIsValid} >Login</Button>
                             </div>)
                             }
                         </form>
