@@ -1,10 +1,10 @@
 import * as actionTypes from './actionTypes'
 
 // Auth process
-export const auth = (email, password) => {
+export const auth = (userId, password) => {
     return {
         type: actionTypes.AUTH_USER_BEGIN,
-        email: email,
+        userId: userId,
         password: password
     }
 }
@@ -18,6 +18,15 @@ export const authSuccess = (token) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token
+    }
+}
+
+export const authFail = (error) => {
+    console.log('I am in auth fail');
+    
+    return {
+        type: actionTypes.AUTH_FAIL,
+        error: error
     }
 }
 ////
@@ -42,3 +51,10 @@ export const authLogoutSucced = () => {
     }
 }
 ////
+
+// Auth UI
+export const authRemoveError = () => {
+    return {
+        type: actionTypes.AUTH_REMOVE_ERROR
+    }
+}

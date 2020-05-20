@@ -9,9 +9,19 @@ class Input extends Component {
 
     state = {
         focused: false,
+        error: null
+    }
+
+    componentDidMount() { // When you submit the form, these inputs are remounted, that why additional check is provided
+        if (this.props.formSubmitted) {
+            this.setState({focused: true})
+        }
+        if (this.props.errorOccured) {
+            this.setState({error: this.props.errorOccured})
+        }
+        
     }
    
-
     onFocus = () => {
         this.setState({focused: true})
     }
@@ -48,13 +58,13 @@ class Input extends Component {
             }
         }
 
-        if(this.state.focused) {
+        if(this.state.focused || !this.state.error) {
             iconClasses.push(classes.IconFocused)
             labelClasses.push(classes.LabelFocused)
             inputDivClasses.push(classes.InputWithIconFocused)
         }
 
-        if (this.props.invalid && this.props.touched && this.props.value !== '' && this.props.value.length >= 5) {
+        if ((this.props.invalid && this.props.touched && this.props.value !== '' && this.props.value.length >= 5) || (this.props.errorOccured) ) {
             borderBottomClasses.push(classes.BorderBottomFocusedDanger)
             iconClasses.push(classes.IconFocusedDanger)
             switch (this.props.elementConfig.type) {
@@ -62,7 +72,7 @@ class Input extends Component {
                     errorMsg = 'Enter a valid ID'
                     break;
                 case 'password':
-                    errorMsg = 'Password should consist of at least 8 characters, letter and digit'
+                    errorMsg = 'Incorrect password'
                     break;
                 default:
                     break;

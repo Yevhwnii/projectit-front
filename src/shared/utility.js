@@ -3,10 +3,10 @@ export const checkValidity = (value, rules ) => {
     if (rules.required) {
         isValid = value.trim().lenght !== 0 && isValid
     }
-    if (rules.isId) {
-        const testString = /^[0-9]+$/
-        isValid = testString.test(value) && isValid
-    }
+    // if (rules.isId) {
+    //     const testString = /^[0-9]+$/
+    //     isValid = testString.test(value) && isValid
+    // }
     if(rules.isPassword) {
         const testString = /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/
         isValid = testString.test(value) && isValid

@@ -7,6 +7,10 @@
     padding: 0 2rem;
 }
 
+.ErrorMsg {
+    color: #c91d12;
+}
+
 .LoginFormContainer {
     display: flex;
     align-items: center;

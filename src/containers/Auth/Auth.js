@@ -4,6 +4,7 @@ import {Helmet} from 'react-helmet'
 
 import classes from './Auth.module.css'
 
+
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import Background from '../../components/UI/Auth/Background/Background'
@@ -28,9 +29,8 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    isId: true,
-                    minLength: 8,
-                    maxLength: 8
+                    minLength: 9,
+                    maxLength: 9
                 },
                 valid: false,
                 touched: false
@@ -52,11 +52,15 @@ class Auth extends Component {
                 touched: false
             },
         },
-        formIsValid: false
+        formIsValid: false,
+        submitted: false
         
     }
 
     inputChangedHandler = (event, inputId) => {
+        if (this.props.error) {
+            this.props.onRemoveError()
+        }
         const isValid = checkValidity(event.target.value, this.state.form[inputId].validation)    
 
         const updatedformElement = {
@@ -67,20 +71,30 @@ class Auth extends Component {
         }
         const updatedForm = {
             ...this.state.form,
-            [inputId]: updatedformElement
+            [inputId]: updatedformElement,
         }
-        this.setState({form: updatedForm}, () => {
+        this.setState({form: updatedForm, submitted: false}, () => {
             this.setState({formIsValid: checkFormValidity(this.state.form)})
         })  
     }
 
     authHandler = (event) => {
         event.preventDefault()
+        this.setState({ submitted: true})
         this.props.onAuth(this.state.form.id.value, this.state.form.password.value)
+        
     }
 
     render() {
         let formArrayElememts = []
+        let errorMsg = null
+        
+
+        if (this.props.error) {
+            errorMsg = <p className={classes.ErrorMsg}>{this.props.error}</p> 
+        }
+        
+
         for (let key in this.state.form) {
             formArrayElememts.push({
                 id: key, // not a number but : email or password 
@@ -88,6 +102,7 @@ class Auth extends Component {
             })
         }
         let formElements = formArrayElememts.map(formElement => {
+
             return <Input 
             key={formElement.id}
             id ={formElement.id}
@@ -99,8 +114,12 @@ class Auth extends Component {
             changed={this.inputChangedHandler}
             invalid={!formElement.config.valid}
             touched={formElement.config.touched}
+            formSubmitted = {this.state.submitted}
+            errorOccured = {this.props.error}
             />
         })
+
+        
 
         return (
             <div>
@@ -114,6 +133,7 @@ class Auth extends Component {
                         <form className={classes.LoginForm} onSubmit={this.authHandler}>
                         <Avatar/>
                         <h2>Welcome!</h2>
+                            {errorMsg}
                             {this.props.loading ? <Spinner loading={this.props.loading} />
                              :
                             (<div>
@@ -131,13 +151,15 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading
+        loading: state.auth.loading,
+        error: state.auth.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (userId, password) => dispatch(actions.auth(userId, password)),
+        onRemoveError: () => dispatch(actions.authRemoveError())
     }
 }
 

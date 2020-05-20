@@ -1,21 +1,29 @@
 import {put, delay} from 'redux-saga/effects'
-import axios from 'axios'
+import axios from '../../axios'
 
 import * as actions from '../actions'
 
 
 // Auth - process saga
 export function* authSaga(action) {
+    console.log('I am in AUTH saga now');
+    
     yield put(actions.authStart())
     const authData = {
-        email: action.email,
+        userID: action.userId,
         password: action.password
     }
-    console.log(authData);
+
+    try {
+        const response = yield axios.post('/api/auth', authData)
+        console.log(response); 
+    } catch (error) {
+        yield put(actions.authFail(error.response.data.msg))
+    }
     
-    yield localStorage.setItem('token', 'token received from database')
-    yield delay(3000)
-    yield put(actions.authSuccess('token received from database'))
+    // yield localStorage.setItem('token', 'token received from database')
+    // yield delay(3000)
+    // yield put(actions.authSuccess('token received from database'))
     // Process of sending request to the backend, retrevieng it back, and store in localStorage
     // const url = ''
     // try {
