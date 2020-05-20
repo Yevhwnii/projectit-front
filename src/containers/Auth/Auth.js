@@ -14,6 +14,7 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import * as actions from '../../store/actions/index'
 import {checkValidity, checkFormValidity} from '../../shared/utility'
 
+
 class Auth extends Component {
 
     state = {
@@ -56,6 +57,19 @@ class Auth extends Component {
         submitted: false
         
     }
+
+    // componentDidMount() {
+    //     axios.post('/api/admin' , { "ik_Hu6D3B"
+    //         firstName: 'ss',
+    //         lastName: 'sss',
+    //         password: 'boomer3223'
+    //     })
+    //     .then(res => {
+    //         console.log(res);
+            
+    //     })
+        
+    // }
 
     inputChangedHandler = (event, inputId) => {
         if (this.props.error) {

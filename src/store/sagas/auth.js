@@ -1,4 +1,4 @@
-import {put, delay} from 'redux-saga/effects'
+import {put} from 'redux-saga/effects'
 import axios from '../../axios'
 
 import * as actions from '../actions'
@@ -13,35 +13,34 @@ export function* authSaga(action) {
         userID: action.userId,
         password: action.password
     }
-
     try {
         const response = yield axios.post('/api/auth', authData)
-        console.log(response); 
+        const token = response.data.token
+        yield localStorage.setItem('token', token)
+        yield localStorage.setItem('userId', action.userId)
+        yield put(actions.authSuccess(token, action.userId))
     } catch (error) {
         yield put(actions.authFail(error.response.data.msg))
     }
     
-    // yield localStorage.setItem('token', 'token received from database')
-    // yield delay(3000)
-    // yield put(actions.authSuccess('token received from database'))
-    // Process of sending request to the backend, retrevieng it back, and store in localStorage
-    // const url = ''
-    // try {
-    //     const response = yield 
-    // } catch (error) {
-        
-    // }
 }
 // Auth - check auth process saga
 export function* authCheckState(action) {
     const token = yield localStorage.getItem('token')
-    // If !token - logout
-    // TODO: expiration data check, if expired then logout, if not, new expiration date is assigned
+    const userId = yield localStorage.getItem('userId')
     
-    yield put(actions.authSuccess(token))
+    if (token) {
+        yield put(actions.authSuccess(token, userId))
+    } else {
+        yield put(actions.authLogout())
+    }
+    // TODO: expiration data check, if expired then logout, if not, new expiration date is assigned
+    // what if i changed something in token? !!!
+    
 }
 // Auth - logout process saga
 export function* authLogout(action) {
     yield localStorage.removeItem('token')
+    yield localStorage.removeItem('userId')
     yield put(actions.authLogoutSucced())
 }
