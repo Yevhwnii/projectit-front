@@ -7,14 +7,6 @@ import * as actions from '../../store/actions/index'
 
 class Inventory extends Component {
 
-    onLogout = () => {
-        this.props.onLogout()
-        return (
-            <Redirect to="/" />
-        )
-    }
-
-
     render() {
         return (
             <div>
@@ -22,17 +14,9 @@ class Inventory extends Component {
                     <title>Invetory managment</title>
                 </Helmet>
                 <h2>Inventory</h2>
-                <button onClick={this.onLogout}>Logout</button>
             </div>
         )
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogout: () => dispatch(actions.authLogout())
-    }
-}
-
-
-export default connect(null, mapDispatchToProps)(Inventory);
+export default Inventory
