@@ -46,7 +46,7 @@ class Input extends Component {
         let borderBottomClasses = [classes.BorderBottomFocused]
         let errorMsg = null
 
-        // If it is inout with icon, then get icon from font awesome
+        // If it is input with icon, then get icon from font awesome
         if (this.props.icon) {
             switch (this.props.icon) {
                 case 'user':

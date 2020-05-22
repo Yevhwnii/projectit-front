@@ -40,4 +40,4 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
 export default withErrorHandler;
 
-// Complete error handler with modal
+// TODO: Complete error handler with modal, add later it to components which requires it
