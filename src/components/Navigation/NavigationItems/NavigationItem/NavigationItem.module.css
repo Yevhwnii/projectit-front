@@ -1,0 +1,27 @@
+.NavItem {
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    width: auto;
+    align-items: center;
+    transition: .3s ease-out;
+}
+
+.NavItem a {
+    padding: 16px 15px;
+    text-decoration: none;
+    color: #E8E8E8;
+    height: 100%;
+    box-sizing: border-box;
+    display: block;
+    border-bottom: 4px solid transparent;
+}
+
+.NavItem a:hover,
+.NavItem a:active,
+.NavItem a.active {
+    color: rgba(204,85,0, 0.8);
+    background-color: rgba(245,245,245, 0.3);
+    border-bottom: 4px solid rgba(204,85,0, 0.8);
+}
