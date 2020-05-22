@@ -8,8 +8,7 @@ import classes from './Input.module.css'
 class Input extends Component {
 
     state = {
-        focused: false,
-        error: null
+        focused: false
     }
 
     componentDidMount() { // When you submit the form, these inputs are remounted, that why additional check is provided
@@ -21,10 +20,11 @@ class Input extends Component {
         }
         
     }
-   
+   // User clcked on input, react to it
     onFocus = () => {
         this.setState({focused: true})
     }
+    // User clicked away from input, react to it
     onBlur = () => {
         if (!this.props.value) {
             this.setState({focused: false}) 
@@ -32,6 +32,7 @@ class Input extends Component {
     }
 
     render() {  
+        // Basic setup of classes
         const animationTiming = {
             enter: 600,
             exit: 1000
@@ -45,6 +46,7 @@ class Input extends Component {
         let borderBottomClasses = [classes.BorderBottomFocused]
         let errorMsg = null
 
+        // If it is inout with icon, then get icon from font awesome
         if (this.props.icon) {
             switch (this.props.icon) {
                 case 'user':
@@ -58,15 +60,18 @@ class Input extends Component {
             }
         }
 
-        if(this.state.focused || !this.state.error) {
+        // If user is focused on input, add classes
+        if(this.state.focused ) {
             iconClasses.push(classes.IconFocused)
             labelClasses.push(classes.LabelFocused)
             inputDivClasses.push(classes.InputWithIconFocused)
         }
 
+        // If something wrong with input, add danger classes or if form is submitted and error occured, add danger class
         if ((this.props.invalid && this.props.touched && this.props.value !== '' && this.props.value.length >= 5) || (this.props.errorOccured) ) {
             borderBottomClasses.push(classes.BorderBottomFocusedDanger)
             iconClasses.push(classes.IconFocusedDanger)
+            // Pop up window when hovering on input
             switch (this.props.elementConfig.type) {
                 case 'text':
                     errorMsg = 'Enter a valid ID'
@@ -79,6 +84,7 @@ class Input extends Component {
             }
         }
         
+        // Creation of element based on element type
         switch (this.props.elementType) {
             case 'input':
                 inputElement = <input
