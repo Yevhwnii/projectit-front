@@ -3,8 +3,10 @@ import {connect} from 'react-redux'
 import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
 
 import * as actions from './store/actions/index'
+import Layout from './components/Layout/Layout'
 import Auth from './containers/Auth/Auth'
 import Inventory from './containers/Inventory/Inventory'
+import Logout from './containers/Auth/Logout/Logout'
 
 class App extends Component {
 
@@ -24,6 +26,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/dashboard" component={Inventory}/>
+          <Route path="/logout" component={Logout} />
           <Redirect to="/dashboard" />
         </Switch>
       )
@@ -31,7 +34,11 @@ class App extends Component {
 
     return (
       <div className="App">
-        {routes}
+      {this.props.isAuth ?
+          <Layout>
+            {routes}
+          </Layout>: routes }
+        
       </div>
     );
   }
