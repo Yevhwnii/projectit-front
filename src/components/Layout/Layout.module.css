@@ -1,0 +1,10 @@
+.Content {
+    padding-top: 72px;
+}
+
+.Background {
+    background-color: #F5F5F5;
+    min-height: 100vh;
+    width: 100vw;
+
+}
