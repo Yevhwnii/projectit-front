@@ -17,8 +17,8 @@ class Users extends Component {
       axios.get('/api/cashier').then((res) => {
         let tableData = [];
         for (let key in res.data) {
-          const { userID, firstName, lastName } = res.data[key];
-          tableData.push({ userId: userID, firstName, lastName });
+          const { _id, userID, firstName, lastName } = res.data[key];
+          tableData.push({ id: _id, userId: userID, firstName, lastName });
         }
         this.setState({ data: tableData });
         console.log(this.state);
@@ -31,6 +31,9 @@ class Users extends Component {
       'Are you sure you want to delete this user?'
     );
     if (proceedToDelete) {
+      const userId = rowData.id;
+      axios.delete(`/api/cashier/${userId}`);
+
       const data = [...this.state.data];
       const indexToDelete = data.indexOf(rowData);
       data.splice(indexToDelete, 1);
@@ -39,6 +42,12 @@ class Users extends Component {
   };
 
   onEditRow = (newData, oldData) => {
+    const userId = newData.id;
+
+    axios.put(`/api/cashier/${userId}`, {
+      firstName: newData.firstName,
+      lastName: newData.lastName,
+    });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const data = [...this.state.data];
