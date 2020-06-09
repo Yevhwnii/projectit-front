@@ -54,6 +54,7 @@ class UserTable extends PureComponent {
         field: 'userId',
         filtering: false,
         sorting: false,
+        editable: 'never',
         width: 200,
         cellStyle: {
           borderRight: '1px solid #DCDCDC',
@@ -74,17 +75,11 @@ class UserTable extends PureComponent {
         },
       },
     ],
-    data: [],
     actions: [
-      {
-        icon: tableIcons.Edit,
-        tooltip: 'Edit user',
-        onClick: () => {},
-      },
       {
         icon: tableIcons.Delete,
         tooltip: 'Delete user',
-        onClick: () => {},
+        onClick: (event, rowData) => this.props.onDelete(event, rowData),
       },
     ],
     options: {
@@ -100,8 +95,16 @@ class UserTable extends PureComponent {
           this.state.selectedRow === rowData.tableData.id ? '#EEE' : '#FFF',
       }),
     },
+    editable: {
+      onRowUpdate: (newData, oldData) => this.props.onEdit(newData, oldData),
+    },
     selectedRow: null,
+    data: [],
   };
+
+  componentDidUpdate() {
+    this.setState({ data: this.props.data });
+  }
 
   render() {
     return (
@@ -110,8 +113,9 @@ class UserTable extends PureComponent {
           icons={tableIcons}
           title={this.state.title}
           columns={this.state.columns}
-          data={this.props.data}
+          data={this.state.data}
           actions={this.state.actions}
+          editable={this.state.editable}
           options={this.state.options}
           onRowClick={(e, selectedRow) => {
             this.setState({ selectedRow: selectedRow.tableData.id });
