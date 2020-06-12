@@ -3,16 +3,23 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
+import classes from './UserManagement.module.css';
 import axios from '../../../axios';
 import * as actions from '../../../store/actions/index';
 import UserTable from '../../../components/Tables/UserTable';
-import { lightGreen } from '@material-ui/core/colors';
+import UserModal from '../../../components/UI/Modal/UserModal/UserModal';
 
 class Users extends Component {
   state = {
     data: [],
+    openModal: false,
   };
+
   componentDidMount() {
+    this.fetchAPI();
+  }
+
+  fetchAPI = () => {
     setTimeout(() => {
       axios.get('/api/cashier').then((res) => {
         let tableData = [];
@@ -21,10 +28,9 @@ class Users extends Component {
           tableData.push({ id: _id, userId: userID, firstName, lastName });
         }
         this.setState({ data: tableData });
-        console.log(this.state);
       });
     }, 100);
-  }
+  };
 
   onDeleteRow = (event, rowData) => {
     const proceedToDelete = window.confirm(
@@ -58,16 +64,50 @@ class Users extends Component {
       }, 400);
     });
   };
+  onAddRow = (firstName, lastName, password, e) => {
+    e.preventDefault();
+    axios
+      .post('/api/cashier', {
+        firstName: firstName,
+        lastName: lastName,
+        password: password,
+      })
+      .then((res) => {
+        this.setState({ openModal: false });
+        this.fetchAPI();
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+  };
+
+  openModalHandler = () => {
+    this.setState({ openModal: true });
+  };
+  closeModalHandler = () => {
+    this.setState({ openModal: false });
+  };
   render() {
     return (
       <div>
-        <Helmet>
-          <title>Users Management</title>
-        </Helmet>
-        <UserTable
-          data={this.state.data}
-          onDelete={this.onDeleteRow}
-          onEdit={this.onEditRow}
+        <div className={classes.Container}>
+          <Helmet>
+            <title>Users Management</title>
+          </Helmet>
+
+          <UserTable
+            data={this.state.data}
+            onDelete={this.onDeleteRow}
+            onEdit={this.onEditRow}
+          />
+          <button className={classes.Button} onClick={this.openModalHandler}>
+            Register new employee
+          </button>
+        </div>
+        <UserModal
+          open={this.state.openModal}
+          onClose={this.closeModalHandler}
+          submit={this.onAddRow}
         />
       </div>
     );

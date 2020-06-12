@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import MaterialTable from 'material-table';
+
 import { forwardRef } from 'react';
 
-import axios from '../../axios';
 import classes from './UserTable.module.css';
 
 import AddBox from '@material-ui/icons/AddBox';
@@ -20,6 +20,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import { TablePagination } from '@material-ui/core';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -110,6 +111,11 @@ class UserTable extends PureComponent {
     return (
       <div className={classes.Table}>
         <MaterialTable
+          components={{
+            Pagination: (props) => (
+              <TablePagination {...props} rowsPerPageOptions={[5, 10]} />
+            ),
+          }}
           icons={tableIcons}
           title={this.state.title}
           columns={this.state.columns}
