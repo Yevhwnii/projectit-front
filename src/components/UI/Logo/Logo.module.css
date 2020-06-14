@@ -1,0 +1,9 @@
+.Logo {
+  width: 200px;
+}
+
+.Container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
