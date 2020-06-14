@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import classes from './UserManagement.module.css';
 import axios from '../../../axios';
 import * as actions from '../../../store/actions/index';
-import UserTable from '../../../components/Tables/UserTable';
+import UserTable from '../../../components/Tables/UserTable/UserTable';
 import UserModal from '../../../components/UI/Modal/UserModal/UserModal';
 
 class Users extends Component {
@@ -15,10 +15,12 @@ class Users extends Component {
     openModal: false,
   };
 
+  // On Mounting component - Fetch data from MongoDB
   componentDidMount() {
     this.fetchAPI();
   }
 
+  // Method for fetching Data
   fetchAPI = () => {
     setTimeout(() => {
       axios.get('/api/cashier').then((res) => {
@@ -32,6 +34,7 @@ class Users extends Component {
     }, 100);
   };
 
+  // Upon clicking Delete icon in the table - do this:
   onDeleteRow = (event, rowData) => {
     const proceedToDelete = window.confirm(
       'Are you sure you want to delete this user?'
@@ -47,6 +50,7 @@ class Users extends Component {
     }
   };
 
+  // Upon clicking Edit button in the table - do this:
   onEditRow = (newData, oldData) => {
     const userId = newData.id;
 
@@ -64,6 +68,8 @@ class Users extends Component {
       }, 400);
     });
   };
+
+  //Upon clicking Register new Employee button - do this:
   onAddRow = (firstName, lastName, password, e) => {
     e.preventDefault();
     axios
@@ -81,9 +87,11 @@ class Users extends Component {
       });
   };
 
+  // Modal open handler
   openModalHandler = () => {
     this.setState({ openModal: true });
   };
+  // Modal close handler
   closeModalHandler = () => {
     this.setState({ openModal: false });
   };
@@ -92,7 +100,7 @@ class Users extends Component {
       <div>
         <div className={classes.Container}>
           <Helmet>
-            <title>Users Management</title>
+            <title>User Management</title>
           </Helmet>
 
           <UserTable
