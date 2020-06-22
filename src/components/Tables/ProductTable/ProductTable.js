@@ -46,7 +46,7 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-class UserTable extends PureComponent {
+class ProductTable extends PureComponent {
   state = {
     title: 'List of products',
     columns: [
@@ -139,4 +139,4 @@ class UserTable extends PureComponent {
     );
   }
 }
-export default UserTable;
+export default ProductTable;
