@@ -6,8 +6,6 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 import Logo from '../../UI/Logo/Logo';
 
 const Toolbar = (props) => {
-  console.log(props.role);
-
   return (
     <header className={classes.Toolbar}>
       <div className={classes.Container}>

@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import classes from './UserManagement.module.css';
 import axios from '../../../axios';
-import * as actions from '../../../store/actions/index';
 import UserTable from '../../../components/Tables/UserTable/UserTable';
 import UserModal from '../../../components/UI/Modal/UserModal/UserModal';
 

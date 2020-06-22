@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 
 import axios from '../../../axios';
-import classes from './Inventory.module.css';
 
 import ProductTable from '../../../components/Tables/ProductTable/ProductTable';
 
