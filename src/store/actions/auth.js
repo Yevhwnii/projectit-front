@@ -14,11 +14,12 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, role) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token,
     userId: userId,
+    role: role,
   };
 };
 

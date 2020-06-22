@@ -6,6 +6,7 @@ const initialState = {
   error: null,
   loading: false,
   authCheckFinished: false,
+  role: '',
 };
 
 const authStart = (state, action) => {
@@ -21,6 +22,7 @@ const authSuccess = (state, action) => {
     ...state,
     token: action.token,
     userId: action.userId,
+    role: action.role,
     loading: false,
     error: null,
     authCheckFinished: true,
