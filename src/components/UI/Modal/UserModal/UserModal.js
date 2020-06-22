@@ -42,8 +42,6 @@ class UserModal extends Component {
   };
 
   render() {
-    console.log();
-
     return (
       <ModalWindow show={this.props.open} closeModal={this.props.onClose}>
         <div className={classes.Container} autoComplete='off'>
