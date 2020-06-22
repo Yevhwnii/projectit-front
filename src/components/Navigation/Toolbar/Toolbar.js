@@ -6,15 +6,19 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 import Logo from '../../UI/Logo/Logo';
 
 const Toolbar = (props) => {
+  console.log(props.role);
+
   return (
     <header className={classes.Toolbar}>
       <div className={classes.Container}>
         <Logo />
-        <span className={classes.UserId}>User ID: {props.userId}</span>
-        <span>Role: </span>
+        <div className={classes.Info}>
+          <span className={classes.Text}>User ID: {props.userId}</span>
+          <span className={classes.Text}>Role: {props.role} </span>
+        </div>
       </div>
       <nav>
-        <NavigationItems />
+        <NavigationItems role={props.role} />
       </nav>
     </header>
   );
@@ -23,6 +27,7 @@ const Toolbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     userId: state.auth.userId,
+    role: state.auth.role,
   };
 };
 export default connect(mapStateToProps)(Toolbar);

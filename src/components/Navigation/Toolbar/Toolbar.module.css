@@ -24,6 +24,13 @@
   justify-content: space-around;
   align-items: center;
 }
-.UserId {
+.Text {
   font-size: 0.9rem;
+}
+
+.Info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
