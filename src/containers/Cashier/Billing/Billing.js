@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import axios from '../../../axios';
 
+import Modal from '../../../components/UI/Modal/Modal';
 import classes from './Billing.module.css';
 import BillingSystem from '../../../components/Tables/Billing/Billing';
 
@@ -9,6 +10,7 @@ class Billing extends Component {
   state = {
     data: null,
     totalPrice: 0,
+    openModal: false,
   };
   // Fetching data
   fetchAPI = () => {
@@ -86,6 +88,17 @@ class Billing extends Component {
       }, 400);
     });
   };
+
+  payClickHandler = () => {
+    this.setState({ openModal: true });
+    axios.delete('/api/currentBill').then((res) => {
+      console.log('Items cleared');
+    });
+  };
+
+  closeModal = () => {
+    this.setState({ openModal: false });
+  };
   render() {
     return (
       <div>
@@ -101,8 +114,20 @@ class Billing extends Component {
           <h2 className={classes.Text}>
             Total Price: {this.state.totalPrice}zl.{' '}
           </h2>
-          <button className={classes.Button}>Pay</button>
+          <button className={classes.Button} onClick={this.payClickHandler}>
+            Pay
+          </button>
         </div>
+        <Modal show={this.state.openModal} closeModal={this.closeModal}>
+          <div className={classes.ModalContainer}>
+            <h2 className={classes.ModalText}>
+              Thank you for attending our shop!
+            </h2>
+            <button className={classes.Button} onClick={this.closeModal}>
+              Continue
+            </button>
+          </div>
+        </Modal>
       </div>
     );
   }
