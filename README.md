@@ -1,6 +1,6 @@
 ###
 
-This is frontend part of project created for passing subject during Bachelor studies in my University.
+This is frontend part of project created in React for passing subject during Bachelor studies in my University.
 Backend part was create by my groupmates
 
 ####
